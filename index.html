@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-graduation-cap"></i> AI Study Assistant</h1>
+            <p>Transform your study materials into effective flashcards, summaries, and quizzes</p>
+        </header>
+
+        <div class="app-container">
+            <!-- Tabs Navigation -->
+            <div class="tabs">
+                <button type="button" class="tab-btn active" data-tab="flashcards">
+                    <i class="fas fa-clone"></i> Flashcards
+                </button>
+                <button type="button" class="tab-btn" data-tab="summary">
+                    <i class="fas fa-file-alt"></i> Summary
+                </button>
+                <button type="button" class="tab-btn" data-tab="quiz">
+                    <i class="fas fa-question-circle"></i> Quiz
+                </button>
+                <button type="button" class="tab-btn" data-tab="concept-map">
+                    <i class="fas fa-project-diagram"></i> Concept Map
+                </button>
+                <button type="button" class="tab-btn" data-tab="study-guide">
+                    <i class="fas fa-book"></i> Study Guide
+                </button>
+            </div>
+
+            <!-- Flashcards Tab -->
+            <div id="flashcards-tab" class="tab-content active">
+                <form id="flashcards-form">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="flashcard-text">Enter your study material</label>
+                            <textarea id="flashcard-text" placeholder="Paste your textbook paragraph, notes, or any study material here..."></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Card Type</label>
+                            <div class="options-grid">
+                                <div class="option-card active" data-type="qa">
+                                    <i class="fas fa-question"></i>
+                                    <h3>Q&A</h3>
+                                    <p>Question and answer format</p>
+                                </div>
+                                <div class="option-card" data-type="fill_blank">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                    <h3>Fill in Blank</h3>
+                                    <p>Complete the sentence</p>
+                                </div>
+                                <div class="option-card" data-type="true_false">
+                                    <i class="fas fa-check-circle"></i>
+                                    <h3>True/False</h3>
+                                    <p>Determine if statement is true</p>
+                                </div>
+                                <div class="option-card" data-type="multiple_choice">
+                                    <i class="fas fa-list-ol"></i>
+                                    <h3>Multiple Choice</h3>
+                                    <p>Select the correct answer</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="subject">Subject (Optional)</label>
+                            <input type="text" id="subject" placeholder="e.g., Biology, History, Computer Science">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="difficulty">Difficulty</label>
+                            <select id="difficulty">
+                                <option value="easy">Easy</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="card-count">Number of Cards</label>
+                            <input type="number" id="card-count" min="1" max="20" value="5">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">
+                        <i class="fas fa-magic"></i> Generate Flashcards
+                    </button>
+                </form>
+
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Generating your flashcards...</p>
+                </div>
+
+                <div class="message error-message"></div>
+                <div class="message success-message"></div>
+
+                <div id="flashcards-results" class="results-section">
+                    <div id="flashcard-container" class="flashcard-container"></div>
+
+                    <div class="flashcard-controls">
+                        <button type="button" class="btn btn-secondary" id="prev-card-btn">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button type="button" class="btn" id="flip-card-btn">
+                            <i class="fas fa-sync"></i> Flip Card
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="next-card-btn">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="flashcard-controls">
+                        <button type="button" class="btn btn-success" id="mark-correct-btn">
+                            <i class="fas fa-check"></i> I Got It Right
+                        </button>
+                        <button type="button" class="btn btn-error" id="mark-incorrect-btn">
+                            <i class="fas fa-times"></i> I Got It Wrong
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="download-flashcards-btn">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Tab -->
+            <div id="summary-tab" class="tab-content">
+                <form id="summary-form">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="summary-text">Enter your study material</label>
+                            <textarea id="summary-text" placeholder="Paste your textbook paragraph, notes, or any study material here..."></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Summary Style</label>
+                            <div class="options-grid">
+                                <div class="option-card active" data-style="bullet_points">
+                                    <i class="fas fa-list"></i>
+                                    <h3>Bullet Points</h3>
+                                    <p>Concise key points</p>
+                                </div>
+                                <div class="option-card" data-style="paragraph">
+                                    <i class="fas fa-paragraph"></i>
+                                    <h3>Paragraph</h3>
+                                    <p>Flowing narrative</p>
+                                </div>
+                                <div class="option-card" data-style="outline">
+                                    <i class="fas fa-stream"></i>
+                                    <h3>Outline</h3>
+                                    <p>Hierarchical structure</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="summary-length">Summary Length</label>
+                            <select id="summary-length">
+                                <option value="brief" selected>Brief</option>
+                                <option value="detailed">Detailed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">
+                        <i class="fas fa-magic"></i> Generate Summary
+                    </button>
+                </form>
+
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Generating your summary...</p>
+                </div>
+
+                <div class="message error-message"></div>
+                <div class="message success-message"></div>
+
+                <div id="summary-results" class="results-section">
+                    <div id="summary-container" class="summary-container"></div>
+
+                    <div class="summary-controls">
+                        <button type="button" id="download-summary-btn" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button type="button" id="copy-summary-btn" class="btn">
+                            <i class="fas fa-copy"></i> Copy to Clipboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Tab -->
+            <div id="quiz-tab" class="tab-content">
+                <form id="quiz-form">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="quiz-text">Enter your study material</label>
+                            <textarea id="quiz-text" placeholder="Paste your textbook paragraph, notes, or any study material here..."></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="quiz-subject">Subject (Optional)</label>
+                            <input type="text" id="quiz-subject" placeholder="e.g., Biology, History, Computer Science">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="quiz-difficulty">Difficulty</label>
+                            <select id="quiz-difficulty">
+                                <option value="easy">Easy</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="question-count">Number of Questions</label>
+                            <input type="number" id="question-count" min="1" max="20" value="5">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">
+                        <i class="fas fa-magic"></i> Generate Quiz
+                    </button>
+                </form>
+
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Generating your quiz...</p>
+                </div>
+
+                <div class="message error-message"></div>
+                <div class="message success-message"></div>
+
+                <div id="quiz-results" class="results-section">
+                    <div id="quiz-container" class="quiz-container"></div>
+
+                    <div class="quiz-controls">
+                        <button type="button" id="check-answers-btn" class="btn">
+                            <i class="fas fa-check-double"></i> Check Answers
+                        </button>
+                        <button type="button" id="reset-quiz-btn" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Reset Quiz
+                        </button>
+                        <button type="button" id="download-quiz-btn" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Concept Map Tab -->
+            <div id="concept-map-tab" class="tab-content">
+                <form id="concept-map-form">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="concept-map-text">Enter your study material</label>
+                            <textarea id="concept-map-text" placeholder="Paste your textbook paragraph, notes, or any study material here..."></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="concept-map-subject">Subject (Optional)</label>
+                            <input type="text" id="concept-map-subject" placeholder="e.g., Biology, History, Computer Science">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="concept-map-complexity">Complexity</label>
+                            <select id="concept-map-complexity">
+                                <option value="simple">Simple</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="complex">Complex</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">
+                        <i class="fas fa-magic"></i> Generate Concept Map
+                    </button>
+                </form>
+
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Generating your concept map...</p>
+                </div>
+
+                <div class="message error-message"></div>
+                <div class="message success-message"></div>
+
+                <div id="concept-map-results" class="results-section">
+                    <div id="concept-map-container" class="concept-map-container"></div>
+
+                    <div class="concept-map-controls">
+                        <button type="button" id="download-concept-map-btn" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Guide Tab -->
+            <div id="study-guide-tab" class="tab-content">
+                <form id="study-guide-form">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="study-guide-text">Enter your study material</label>
+                            <textarea id="study-guide-text" placeholder="Paste your textbook paragraph, notes, or any study material here..."></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="study-guide-subject">Subject (Optional)</label>
+                            <input type="text" id="study-guide-subject" placeholder="e.g., Biology, History, Computer Science">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="study-guide-level">Academic Level</label>
+                            <select id="study-guide-level">
+                                <option value="elementary">Elementary</option>
+                                <option value="middle_school">Middle School</option>
+                                <option value="high_school">High School</option>
+                                <option value="undergraduate" selected>Undergraduate</option>
+                                <option value="graduate">Graduate</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">
+                        <i class="fas fa-magic"></i> Generate Study Guide
+                    </button>
+                </form>
+
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Generating your study guide...</p>
+                </div>
+
+                <div class="message error-message"></div>
+                <div class="message success-message"></div>
+
+                <div id="study-guide-results" class="results-section">
+                    <div id="study-guide-container" class="study-guide-container"></div>
+
+                    <div class="study-guide-controls">
+                        <button type="button" id="download-study-guide-btn" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button type="button" id="copy-study-guide-btn" class="btn">
+                            <i class="fas fa-copy"></i> Copy to Clipboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
