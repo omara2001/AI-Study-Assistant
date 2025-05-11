@@ -81,7 +81,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/ai-study-assistant.git
+   git clone https://github.com/omara2001/AI-Study-Assistant.git
    cd ai-study-assistant
    ```
 
@@ -232,21 +232,21 @@
   <table>
     <tr>
       <td width="50%">
-        <img src="screenshots/flashcards.png" alt="Flashcard Generator">
+        <img src="flashcards.png" alt="Flashcard Generator">
         <p align="center"><b>Flashcard Generator</b></p>
       </td>
       <td width="50%">
-        <img src="screenshots/quiz.png" alt="Quiz Creator">
+        <img src="quiz.png" alt="Quiz Creator">
         <p align="center"><b>Quiz Creator</b></p>
       </td>
     </tr>
     <tr>
       <td width="50%">
-        <img src="screenshots/summary.png" alt="Smart Summarizer">
+        <img src="summary.png" alt="Smart Summarizer">
         <p align="center"><b>Smart Summarizer</b></p>
       </td>
       <td width="50%">
-        <img src="screenshots/concept-map.png" alt="Concept Map">
+        <img src="concept-map.png" alt="Concept Map">
         <p align="center"><b>Concept Map Generator</b></p>
       </td>
     </tr>
